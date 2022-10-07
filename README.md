@@ -1,1 +1,1 @@
-# Algoritmi-e-strutture-dati-Lab-PoliTO-2023
+Esercizi di laboratorio del corso di Algoritmi e strutture dati (PoliTO)

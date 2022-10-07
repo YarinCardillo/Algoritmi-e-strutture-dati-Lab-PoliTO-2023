@@ -1,0 +1,3 @@
+/home/yarin/PoliTo/Algoritmi-e-strutture-dati-Lab-PoliTO-2023/lab01/cmake-build-debug/CMakeFiles/lab01.dir
+/home/yarin/PoliTo/Algoritmi-e-strutture-dati-Lab-PoliTO-2023/lab01/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/yarin/PoliTo/Algoritmi-e-strutture-dati-Lab-PoliTO-2023/lab01/cmake-build-debug/CMakeFiles/rebuild_cache.dir
