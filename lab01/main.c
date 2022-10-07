@@ -10,7 +10,7 @@ int ifperiod(char reg);
 
 int main() {
     char stringaInput[100] = "UoAdatpMatoSotoCatoMoto";
-    char stringaDaCercare[20] = "[NNCABBB].[pa]t[^op]";
+    char stringaDaCercare[20] = "[NNCABBB].[pa]t[^o]";
 
     fprintf(stdout, "%s\n", cercaRegexp(stringaInput, stringaDaCercare));
 
@@ -23,15 +23,13 @@ char *cercaRegexp(char *src, char *regexp){
     char *p;
     int count=0;
     int i=0;
-
-
     int lenght = (int)strlen(regexp);
+
     for (int j = 0; j < strlen(src) && count < lenght; ++j) {
 
 
-        if(src[j] == regexp[i] || ifperiod(regexp[i]) || ifbrackets(src, regexp, &i, &j, &lenght) || !ifbracketsAlt(src, regexp, &i, &j, &lenght)){
-      //      if(regexp[i] == 't')
-      //          fprintf(stdout, "ok\n");
+        if(src[j] == regexp[i] || ifperiod(regexp[i]) || !ifbracketsAlt(src, regexp, &i, &j, &lenght) || ifbrackets(src, regexp, &i, &j, &lenght)){
+
             i++;
             count++;
             if(count == 1)
