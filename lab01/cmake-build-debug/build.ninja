@@ -49,8 +49,8 @@ cmake_ninja_workdir = /home/yarin/PoliTo/Algoritmi-e-strutture-dati-Lab-PoliTO-2
 
 build cmake_object_order_depends_target_lab01: phony || CMakeFiles/lab01.dir
 
-build CMakeFiles/lab01.dir/lab1es2.c.o: C_COMPILER__lab01_Debug /home/yarin/PoliTo/Algoritmi-e-strutture-dati-Lab-PoliTO-2023/lab01/lab1es2.c || cmake_object_order_depends_target_lab01
-  DEP_FILE = CMakeFiles/lab01.dir/lab1es2.c.o.d
+build CMakeFiles/lab01.dir/lab1es3.c.o: C_COMPILER__lab01_Debug /home/yarin/PoliTo/Algoritmi-e-strutture-dati-Lab-PoliTO-2023/lab01/lab1es3.c || cmake_object_order_depends_target_lab01
+  DEP_FILE = CMakeFiles/lab01.dir/lab1es3.c.o.d
   FLAGS = -g -std=gnu99
   OBJECT_DIR = CMakeFiles/lab01.dir
   OBJECT_FILE_DIR = CMakeFiles/lab01.dir
@@ -63,7 +63,7 @@ build CMakeFiles/lab01.dir/lab1es2.c.o: C_COMPILER__lab01_Debug /home/yarin/Poli
 #############################################
 # Link the executable lab01
 
-build lab01: C_EXECUTABLE_LINKER__lab01_Debug CMakeFiles/lab01.dir/lab1es2.c.o
+build lab01: C_EXECUTABLE_LINKER__lab01_Debug CMakeFiles/lab01.dir/lab1es3.c.o
   FLAGS = -g
   OBJECT_DIR = CMakeFiles/lab01.dir
   POST_BUILD = :

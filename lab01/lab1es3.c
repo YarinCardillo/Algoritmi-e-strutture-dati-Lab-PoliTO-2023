@@ -13,9 +13,9 @@ typedef struct Corse{
     char oraArrivo[9];
     int ritardo;
 }corse;
-typedef enum Comando{r_date, r_partenza, r_capolinea, r_ritardo, r_ritardo_tot, r_fine}comando;
+typedef enum Comando{stampa, sorting_data, sorting_codice, sorting_partenza, sorting_arrivo, ricerca_partenza, r_fine}comando;
 
-void selezionaDati(corse array);
+void selezionaDati(corse array, int rows);
 comando leggiComando();
 
 int main(){
@@ -34,19 +34,35 @@ int main(){
     for (int i = 0; i < numRow; ++i) {
         fprintf(stdout, "%s %s %s %s %s %s %d\n", corseArray[i].codiceTratta, corseArray[i].partenza, corseArray[i].destinazione, corseArray[i].data, corseArray[i].oraPartenza, corseArray[i].oraArrivo, corseArray[i].ritardo);
     }
-    selezionaDati(corseArray[numRow]);
+    selezionaDati(corseArray[numRow], numRow);
 
     return 0;
 }
 
-void selezionaDati(corse array){
+void selezionaDati(corse array, int rows){
     int keep=0;
+    int choice;
     do {
         comando cmd = leggiComando();
 
         switch (cmd) {
             case 0:
-                fprintf(stdout, "Palle 0\n");
+
+                fprintf(stdout, "Scegli se stampare a video (1) o su file (2):\n");
+                fscanf(stdin, "%d", &choice);
+                if(choice != 1 && choice != 2){
+                    fprintf(stdout, "Input errato\n");
+                    break;
+                }
+                if(choice==1){
+                    for (int i = 0; i < rows; ++i) {
+                        fprintf(stdout, "%s %s %s %s %s %s %d\n", arra[i].codiceTratta, array[i].partenza, array[i].destinazione, array[i].data, array[i].oraPartenza, array[i].oraArrivo, array[i].ritardo);
+                    }
+                }
+                else{
+
+                }
+
                 keep=1;
                 break;
             case 1:
@@ -81,7 +97,7 @@ void selezionaDati(corse array){
 
 comando leggiComando(){
     comando c;
-    char matrix[r_fine+1][12]={"date", "partenza", "capolinea", "ritardo", "ritardo_tot", "fine"};
+    char matrix[r_fine+1][17]={"stampa", "sorting_data", "sorting_codice", "sorting_partenza", "sorting_arrivo", "ricerca_partenza", "fine"};
     char command[14];
 
     fprintf(stdout, "Digitare correttamente uno dei seguenti comandi: date | partenza | capolinea | ritardo | ritardo_tot | fine (per terminare)");
@@ -89,7 +105,7 @@ comando leggiComando(){
     for (int i = 0; i < 12; ++i) {
         command[i]=tolower(command[i]);
     }
-    c = r_date;
+    c = stampa;
     while(c<r_fine+1 && strcmp(command, matrix[c])!=0){
         c++;
     }
