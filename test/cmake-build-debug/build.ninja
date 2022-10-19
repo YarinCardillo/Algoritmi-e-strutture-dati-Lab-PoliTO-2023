@@ -49,8 +49,8 @@ cmake_ninja_workdir = /home/yarin/PoliTo/Algoritmi-e-strutture-dati-Lab-PoliTO-2
 
 build cmake_object_order_depends_target_test: phony || CMakeFiles/test.dir
 
-build CMakeFiles/test.dir/allocazioneDinamica2.c.o: C_COMPILER__test_Debug /home/yarin/PoliTo/Algoritmi-e-strutture-dati-Lab-PoliTO-2023/test/allocazioneDinamica2.c || cmake_object_order_depends_target_test
-  DEP_FILE = CMakeFiles/test.dir/allocazioneDinamica2.c.o.d
+build CMakeFiles/test.dir/main.c.o: C_COMPILER__test_Debug /home/yarin/PoliTo/Algoritmi-e-strutture-dati-Lab-PoliTO-2023/test/main.c || cmake_object_order_depends_target_test
+  DEP_FILE = CMakeFiles/test.dir/main.c.o.d
   FLAGS = -g -std=gnu99
   OBJECT_DIR = CMakeFiles/test.dir
   OBJECT_FILE_DIR = CMakeFiles/test.dir
@@ -63,7 +63,7 @@ build CMakeFiles/test.dir/allocazioneDinamica2.c.o: C_COMPILER__test_Debug /home
 #############################################
 # Link the executable test
 
-build test: C_EXECUTABLE_LINKER__test_Debug CMakeFiles/test.dir/allocazioneDinamica2.c.o
+build test: C_EXECUTABLE_LINKER__test_Debug CMakeFiles/test.dir/main.c.o
   FLAGS = -g
   OBJECT_DIR = CMakeFiles/test.dir
   POST_BUILD = :

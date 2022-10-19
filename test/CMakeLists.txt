@@ -3,4 +3,4 @@ project(test C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(test allocazioneDinamica2.c)
+add_executable(test main.c)
