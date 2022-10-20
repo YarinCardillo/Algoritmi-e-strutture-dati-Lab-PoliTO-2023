@@ -39,8 +39,8 @@ int main(){
     return 0;
 }
 
-void selezionaDati(corse array[], int rows){
-    int keep=0;
+void selezionaDati(corse array[], int rows) {
+    int keep = 0;
     FILE *fp;
     unsigned short choice;
     do {
@@ -51,54 +51,58 @@ void selezionaDati(corse array[], int rows){
 
                 fprintf(stdout, "Scegli se stampare a video (1) o su file (2):\n");
                 fscanf(stdin, "%hd", &choice);
-                if(choice != 1 && choice != 2){
+                if (choice != 1 && choice != 2) {
                     fprintf(stdout, "Input errato\n");
                     break;
                 }
-                if(choice==1){
+                if (choice == 1) {
                     for (int i = 0; i < rows; ++i) {
-                        fprintf(stdout, "%s %s %s %s %s %s %d\n", array[i].codiceTratta, array[i].partenza, array[i].destinazione, array[i].data, array[i].oraPartenza, array[i].oraArrivo, array[i].ritardo);
+                        fprintf(stdout, "%s %s %s %s %s %s %d\n", array[i].codiceTratta, array[i].partenza,
+                                array[i].destinazione, array[i].data, array[i].oraPartenza, array[i].oraArrivo,
+                                array[i].ritardo);
                     }
-                }
-                else{
+                } else {
                     fp = fopen("outputFile.txt", "w");
-                    if(fp==NULL) fprintf(stdout, "Errore apertura file\n");
+                    if (fp == NULL) fprintf(stdout, "Errore apertura file\n");
                     for (int i = 0; i < rows; ++i) {
-                        fprintf(fp, "%s %s %s %s %s %s %d\n", array[i].codiceTratta, array[i].partenza, array[i].destinazione, array[i].data, array[i].oraPartenza, array[i].oraArrivo, array[i].ritardo);
+                        fprintf(fp, "%s %s %s %s %s %s %d\n", array[i].codiceTratta, array[i].partenza,
+                                array[i].destinazione, array[i].data, array[i].oraPartenza, array[i].oraArrivo,
+                                array[i].ritardo);
                     }
                     fprintf(stdout, "Log printed on 'outputFile.txt'\n");
                 }
 
-                keep=1;
+                keep = 1;
                 break;
             case 1:
                 fprintf(stdout, "Palle 1\n");
-                keep=1;
+                keep = 1;
                 break;
             case 2:
                 fprintf(stdout, "Palle 2\n");
-                keep=1;
+                keep = 1;
                 break;
             case 3:
                 fprintf(stdout, "Palle 3\n");
-                keep=1;
+                keep = 1;
                 break;
             case 4:
                 fprintf(stdout, "Palle 4\n");
-                keep=1;
+                keep = 1;
                 break;
             case 5:
                 fprintf(stdout, "Palle 5\n");
-                keep=0;
+                keep = 0;
                 break;
             default:
                 fprintf(stdout, "Input errato, ripetere\n");
-                keep=1;
+                keep = 1;
                 break;
         }
 
 
-    }while(keep);
+    } while (keep);
+    fclose(fp);
 }
 
 comando leggiComando(){
