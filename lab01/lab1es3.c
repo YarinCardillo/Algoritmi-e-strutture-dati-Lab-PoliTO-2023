@@ -15,7 +15,7 @@ typedef struct Corse{
 }corse;
 typedef enum Comando{stampa, sorting_data, sorting_codice, sorting_partenza, sorting_arrivo, ricerca_partenza, r_fine}comando;
 
-void selezionaDati(corse array, int rows);
+void selezionaDati(corse array[], int rows);
 comando leggiComando();
 
 int main(){
@@ -34,14 +34,15 @@ int main(){
     for (int i = 0; i < numRow; ++i) {
         fprintf(stdout, "%s %s %s %s %s %s %d\n", corseArray[i].codiceTratta, corseArray[i].partenza, corseArray[i].destinazione, corseArray[i].data, corseArray[i].oraPartenza, corseArray[i].oraArrivo, corseArray[i].ritardo);
     }
-    selezionaDati(corseArray[numRow], numRow);
+    selezionaDati(corseArray, numRow);
 
     return 0;
 }
 
-void selezionaDati(corse array, int rows){
+void selezionaDati(corse array[], int rows){
     int keep=0;
-    int choice;
+    FILE *fp;
+    unsigned short choice;
     do {
         comando cmd = leggiComando();
 
@@ -49,18 +50,23 @@ void selezionaDati(corse array, int rows){
             case 0:
 
                 fprintf(stdout, "Scegli se stampare a video (1) o su file (2):\n");
-                fscanf(stdin, "%d", &choice);
+                fscanf(stdin, "%hd", &choice);
                 if(choice != 1 && choice != 2){
                     fprintf(stdout, "Input errato\n");
                     break;
                 }
                 if(choice==1){
                     for (int i = 0; i < rows; ++i) {
-                        fprintf(stdout, "%s %s %s %s %s %s %d\n", arra[i].codiceTratta, array[i].partenza, array[i].destinazione, array[i].data, array[i].oraPartenza, array[i].oraArrivo, array[i].ritardo);
+                        fprintf(stdout, "%s %s %s %s %s %s %d\n", array[i].codiceTratta, array[i].partenza, array[i].destinazione, array[i].data, array[i].oraPartenza, array[i].oraArrivo, array[i].ritardo);
                     }
                 }
                 else{
-
+                    fp = fopen("outputFile.txt", "w");
+                    if(fp==NULL) fprintf(stdout, "Errore apertura file\n");
+                    for (int i = 0; i < rows; ++i) {
+                        fprintf(fp, "%s %s %s %s %s %s %d\n", array[i].codiceTratta, array[i].partenza, array[i].destinazione, array[i].data, array[i].oraPartenza, array[i].oraArrivo, array[i].ritardo);
+                    }
+                    fprintf(stdout, "Log printed on 'outputFile.txt'\n");
                 }
 
                 keep=1;
@@ -100,7 +106,8 @@ comando leggiComando(){
     char matrix[r_fine+1][17]={"stampa", "sorting_data", "sorting_codice", "sorting_partenza", "sorting_arrivo", "ricerca_partenza", "fine"};
     char command[14];
 
-    fprintf(stdout, "Digitare correttamente uno dei seguenti comandi: date | partenza | capolinea | ritardo | ritardo_tot | fine (per terminare)");
+    fprintf(stdout, "Digitare correttamente uno dei seguenti comandi:\n"
+                    "stampa | sorting_data | sorting_codice | sorting_partenza | sorting_arrivo | ricerca_partenza | fine (per terminare)\n");
     fscanf(stdin, "%s", command);
     for (int i = 0; i < 12; ++i) {
         command[i]=tolower(command[i]);
