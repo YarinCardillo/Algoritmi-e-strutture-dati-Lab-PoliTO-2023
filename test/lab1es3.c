@@ -3,7 +3,6 @@
 #include "string.h"
 #include "ctype.h"
 #define filein "corse.txt"
-#define fileout "outputFile.txt"
 
 typedef struct Corse{
     char codiceTratta[30];
@@ -18,8 +17,6 @@ typedef enum Comando{stampa, sorting_data, sorting_codice, sorting_partenza, sor
 
 void selezionaDati(corse array[], int rows);
 comando leggiComando();
-void printFunction(corse array2[], int rows2);
-void sortingData(corse array2[], int rows2);
 
 int main(){
     FILE *fp;
@@ -34,21 +31,48 @@ int main(){
     for (int i = 0; i < numRow; ++i) {
         fscanf(fp, "%s %s %s %s %s %s %d", corseArray[i].codiceTratta, corseArray[i].partenza, corseArray[i].destinazione, corseArray[i].data, corseArray[i].oraPartenza, corseArray[i].oraArrivo, &corseArray[i].ritardo);
     }
-
+    for (int i = 0; i < numRow; ++i) {
+        fprintf(stdout, "%s %s %s %s %s %s %d\n", corseArray[i].codiceTratta, corseArray[i].partenza, corseArray[i].destinazione, corseArray[i].data, corseArray[i].oraPartenza, corseArray[i].oraArrivo, corseArray[i].ritardo);
+    }
     selezionaDati(corseArray, numRow);
 
     return 0;
 }
 
 void selezionaDati(corse array[], int rows) {
-    int keep;
-    int *vp[rows];
+    int keep = 0;
+    FILE *fp2;
+    unsigned short choice;
+    fp2 = fopen("outputFile.txt", "w");
+    if (fp2 == NULL){fprintf(stdout, "Errore apertura file\n"); return;}
     do {
         comando cmd = leggiComando();
 
         switch (cmd) {
             case 0:
-                printFunction(array, rows);
+
+                fprintf(stdout, "Scegli se stampare a video (1) o su file (2):\n");
+                fscanf(stdin, "%hd", &choice);
+                if (choice != 1 && choice != 2) {
+                    fprintf(stdout, "Input errato\n");
+                    break;
+                }
+                if (choice == 1) {
+                    for (int i = 0; i < rows; ++i) {
+                        fprintf(stdout, "%s %s %s %s %s %s %d\n", array[i].codiceTratta, array[i].partenza,
+                                array[i].destinazione, array[i].data, array[i].oraPartenza, array[i].oraArrivo,
+                                array[i].ritardo);
+                    }
+                } else if(choice==2){
+
+                    for (int i = 0; i < rows; ++i) {
+                        fprintf(fp2, "%s %s %s %s %s %s %d\n", array[i].codiceTratta, array[i].partenza,
+                                array[i].destinazione, array[i].data, array[i].oraPartenza, array[i].oraArrivo,
+                                array[i].ritardo);
+                    }
+                    fprintf(stdout, "Log printed on 'outputFile.txt'\n");
+                }
+
                 keep = 1;
                 break;
             case 1:
@@ -69,10 +93,6 @@ void selezionaDati(corse array[], int rows) {
                 break;
             case 5:
                 fprintf(stdout, "Palle 5\n");
-                keep = 1;
-                break;
-            case 6:
-                fprintf(stdout, "Palle 5\n");
                 keep = 0;
                 break;
             default:
@@ -83,7 +103,7 @@ void selezionaDati(corse array[], int rows) {
 
 
     } while (keep);
-
+    fclose(fp2);
 }
 
 comando leggiComando(){
@@ -102,39 +122,4 @@ comando leggiComando(){
         c++;
     }
     return c;
-}
-
-void printFunction(corse array2[], int rows2){
-    unsigned short choice;
-    fprintf(stdout, "Scegli se stampare a video (1) o su file (2):\n");
-    fscanf(stdin, "%hd", &choice);
-    if (choice != 1 && choice != 2) {
-        fprintf(stdout, "Input errato\n");
-    }
-    if (choice == 1) {
-        for (int i = 0; i < rows2; ++i) {
-            fprintf(stdout, "%s %s %s %s %s %s %d\n", array2[i].codiceTratta, array2[i].partenza,
-                    array2[i].destinazione, array2[i].data, array2[i].oraPartenza, array2[i].oraArrivo,
-                    array2[i].ritardo);
-        }
-    } else if(choice==2){
-        FILE *fp2;
-        fp2 = fopen(fileout, "w");
-        if (fp2 == NULL){fprintf(stdout, "Errore apertura file\n"); return;}
-        for (int i = 0; i < rows2; ++i) {
-            fprintf(fp2, "%s %s %s %s %s %s %d\n", array2[i].codiceTratta, array2[i].partenza,
-                    array2[i].destinazione, array2[i].data, array2[i].oraPartenza, array2[i].oraArrivo,
-                    array2[i].ritardo);
-        }
-        fprintf(stdout, "Log printed on 'outputFile.txt'\n");
-        fclose(fp2);
-    }
-}
-
-void sortingData(corse array2[], int rows2){
-
-
-
-
-
 }
