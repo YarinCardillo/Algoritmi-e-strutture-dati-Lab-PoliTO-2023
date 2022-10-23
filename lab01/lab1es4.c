@@ -13,7 +13,7 @@ typedef struct Corse{
     char oraArrivo[9];
     int ritardo;
 }corse;
-typedef enum Comando{stampa, sorting_data, sorting_codice, sorting_partenza, sorting_arrivo, ricerca_partenza, r_fine}comando;
+typedef enum Comando{stampa, sort_data, sort_codice, sort_partenza, sort_arrivo, ricerca_partenza, r_fine}comando;
 
 void selezionaDati(corse array[], int rows);
 void printFunction(corse array2[], int rows2);
@@ -30,6 +30,7 @@ comando leggiComando();
 int main(){
     FILE *fp;
     int numRow;
+    char c;
     fp = fopen(filein, "r");
     if(fp == NULL)
         fprintf(stdout, "Error input file\n");
@@ -40,7 +41,6 @@ int main(){
     for (int i = 0; i < numRow; ++i) {
         fscanf(fp, "%s %s %s %s %s %s %d", corseArray[i].codiceTratta, corseArray[i].partenza, corseArray[i].destinazione, corseArray[i].data, corseArray[i].oraPartenza, corseArray[i].oraArrivo, &corseArray[i].ritardo);
     }
-
     selezionaDati(corseArray, numRow);
     return 0;
 }
@@ -48,13 +48,21 @@ int main(){
 
 void selezionaDati(corse *array, int rows) {
     int keep;
-    corse *corseRef[rows];
+    corse *corseRef1[rows], *corseRef2[rows], *corseRef3[rows], *corseRef4[rows], *corseRef5[rows];
 
     for (int i = 0; i < rows; ++i) {
-        corseRef[i] = &array[i];
+        corseRef1[i] = &array[i];
+        corseRef2[i] = &array[i];
+        corseRef3[i] = &array[i];
+        corseRef4[i] = &array[i];
+        corseRef5[i] = &array[i];
     }
-
+    sortingData(corseRef1, rows);
+    sortingCodice(corseRef2, rows);
+    sortingPartenza(corseRef3, rows);
+    sortingArrivo(corseRef4, rows);
     do {
+
         comando cmd = leggiComando();
         fprintf(stdout, "\n");
 
@@ -64,23 +72,43 @@ void selezionaDati(corse *array, int rows) {
                 keep = 1;
                 break;
             case 1:
-                sortingData(corseRef, rows);
+                fprintf(stdout, "Log ordinato per data:\n");
+                for (int i = 0; i < rows; ++i) {
+                    fprintf(stdout, "%s %s %s %s %s %s %d\n", corseRef1[i]->codiceTratta, corseRef1[i]->partenza,
+                            corseRef1[i]->destinazione, corseRef1[i]->data, corseRef1[i]->oraPartenza, corseRef1[i]->oraArrivo,
+                            corseRef1[i]->ritardo);
+                }
                 keep = 1;
                 break;
             case 2:
-                sortingCodice(corseRef, rows);
+                fprintf(stdout, "Log ordinato per codice tratta:\n");
+                for (int i = 0; i < rows; ++i) {
+                    fprintf(stdout, "%s %s %s %s %s %s %d\n", corseRef2[i]->codiceTratta, corseRef2[i]->partenza,
+                            corseRef2[i]->destinazione, corseRef2[i]->data, corseRef2[i]->oraPartenza, corseRef2[i]->oraArrivo,
+                            corseRef2[i]->ritardo);
+                }
                 keep = 1;
                 break;
             case 3:
-                sortingPartenza(corseRef, rows);
+                fprintf(stdout, "Log ordinato per stazione di partenza:\n");
+                for (int i = 0; i < rows; ++i) {
+                    fprintf(stdout, "%s %s %s %s %s %s %d\n", corseRef3[i]->codiceTratta, corseRef3[i]->partenza,
+                            corseRef3[i]->destinazione, corseRef3[i]->data, corseRef3[i]->oraPartenza, corseRef3[i]->oraArrivo,
+                            corseRef3[i]->ritardo);
+                }
                 keep = 1;
                 break;
             case 4:
-                sortingArrivo(corseRef, rows);
+                fprintf(stdout, "Log ordinato per stazione di arrivo:\n");
+                for (int i = 0; i < rows; ++i) {
+                    fprintf(stdout, "%s %s %s %s %s %s %d\n", corseRef4[i]->codiceTratta, corseRef4[i]->partenza,
+                            corseRef4[i]->destinazione, corseRef4[i]->data, corseRef4[i]->oraPartenza, corseRef4[i]->oraArrivo,
+                            corseRef4[i]->ritardo);
+                }
                 keep = 1;
                 break;
             case 5:
-                ricercaPartenza(corseRef, rows);
+                ricercaPartenza(corseRef5, rows);
                 keep = 1;
                 break;
             case 6:
@@ -97,7 +125,7 @@ void selezionaDati(corse *array, int rows) {
 
 comando leggiComando(){
     comando c;
-    char matrix[r_fine+1][17]={"stampa", "sorting_data", "sorting_codice", "sorting_partenza", "sorting_arrivo", "ricerca_partenza", "fine"};
+    char matrix[r_fine+1][17]={"stampa", "sort_data", "sort_codice", "sort_partenza", "sort_arrivo", "ricerca_partenza", "fine"};
     char command[17];
 
     fprintf(stdout, "\nDigitare correttamente uno dei seguenti comandi:\n"
@@ -161,13 +189,6 @@ void sortingData(corse **array2, int rows2){
             }
         }
     }
-    fprintf(stdout, "Log ordinato per data:\n");
-
-    for (int i = 0; i < rows2; ++i) {
-        fprintf(stdout, "%s %s %s %s %s %s %d\n", array2[i]->codiceTratta, array2[i]->partenza,
-                array2[i]->destinazione, array2[i]->data, array2[i]->oraPartenza, array2[i]->oraArrivo,
-                array2[i]->ritardo);
-    }
 }
 
 
@@ -192,13 +213,6 @@ void sortingCodice(corse **array2, int rows2){
             }
         }
     }
-    fprintf(stdout, "Log ordinato per codice tratta:\n");
-
-    for (int i = 0; i < rows2; ++i) {
-        fprintf(stdout, "%s %s %s %s %s %s %d\n", array2[i]->codiceTratta, array2[i]->partenza,
-                array2[i]->destinazione, array2[i]->data, array2[i]->oraPartenza, array2[i]->oraArrivo,
-                array2[i]->ritardo);
-    }
 }
 
 
@@ -212,13 +226,6 @@ void sortingPartenza(corse **array2, int rows2){
                 array2[j + 1] = temp;
             }
         }
-    }
-    fprintf(stdout, "Log ordinato per stazione di partenza:\n");
-
-    for (int i = 0; i < rows2; ++i) {
-        fprintf(stdout, "%s %s %s %s %s %s %d\n", array2[i]->codiceTratta, array2[i]->partenza,
-                array2[i]->destinazione, array2[i]->data, array2[i]->oraPartenza, array2[i]->oraArrivo,
-                array2[i]->ritardo);
     }
 }
 
@@ -234,18 +241,11 @@ void sortingArrivo(corse **array2, int rows2){
             }
         }
     }
-    fprintf(stdout, "Log ordinato per stazione di arrivo:\n");
-
-    for (int i = 0; i < rows2; ++i) {
-        fprintf(stdout, "%s %s %s %s %s %s %d\n", array2[i]->codiceTratta, array2[i]->partenza,
-                array2[i]->destinazione, array2[i]->data, array2[i]->oraPartenza, array2[i]->oraArrivo,
-                array2[i]->ritardo);
-    }
 }
 
 
 void ricercaPartenza(corse **array2, int rows2){
-    char inputStaz[30], staz[30];
+    char inputStaz[30];
     int count=0;
     fprintf(stdout, "Inserire stazione di partenza:\n");
     fscanf(stdin, "%s", inputStaz);
